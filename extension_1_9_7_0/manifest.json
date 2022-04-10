@@ -1,0 +1,50 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "Sealights",
+	"version": "1.9.7",
+	"description": "View coverage data in Git repositories. Collect code coverage from manual tests running in the browser.",
+	"homepage_url": "https://chrome.google.com/webstore/detail/sealights-code-viewer/ldcbjefiplkmggapdfbpeemhihkgdmik?utm_source=chrome-app-launcher-info-dialog",
+	"manifest_version": 2,
+	"minimum_chrome_version": "49",
+	"permissions": [
+		"http://*/*",
+		"https://*/*",
+		"storage",
+		"tabs",
+		"webNavigation"
+	],
+	"content_security_policy": "script-src 'self' https://*.sealights.co; object-src 'self'",
+	"icons": {
+		"128": "media/icon.png"
+	},
+	"browser_action": {
+		"default_popup": "templates/popup.html"
+	},
+	"content_scripts": [
+		{
+			"run_at": "document_idle",
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"css": [
+				"styles/content.css"
+			],
+			"js": [
+				"js/content.js"
+			]
+		}
+	],
+	"background": {
+		"scripts": [
+			"js/background.js"
+		]
+	},
+	"web_accessible_resources": [
+		"templates/*",
+		"fonts/*",
+		"media/*",
+		"config/*"
+	]
+}

@@ -1,0 +1,73 @@
+/*!**********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./extension/styles/popup.less ***!
+  \**********************************************************************************************************************/
+/***** Roboto Regular *****/
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url('chrome-extension://__MSG_@@extension_id__/fonts/Roboto/Roboto-Regular.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/***** Roboto Medium *****/
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'), url('chrome-extension://__MSG_@@extension_id__/fonts/Roboto/Roboto-Medium.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/***** Roboto Bold *****/
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Bold'), local('Roboto-Bold'), url('chrome-extension://__MSG_@@extension_id__/fonts/Roboto/Roboto-Bold.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Bold'), local('Roboto-Bold'), url('chrome-extension://__MSG_@@extension_id__/fonts/material/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') format('woff2');
+}
+/**
+* -----------------------------
+* Variables
+*
+* 1. Font families
+* 2. Colors
+* 3. Gradients
+* 4. Shadows
+* 5. Z-index
+* 6. Sizes
+* 7. Images (content script)
+* 8. Transitions
+* -----------------------------
+***/
+/***** Font families *****/
+/***** Colors *****/
+/***** Gradients *****/
+/***** Shadows *****/
+/***** Z-index *****/
+/**** dimensions and spacing ******/
+/***** Sizes *****/
+/***** Images (content script) *****/
+/***** Transitions *****/
+/***** Manual tests *****/
+body,
+html {
+  margin: 0;
+  padding: 0;
+  display: block;
+  font-family: 'Roboto', sans-serif;
+  min-width: 350px;
+  background: #fffffc;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+* {
+  box-sizing: border-box;
+}
+
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3R5bGVzL3BvcHVwLmNzcyIsIm1hcHBpbmdzIjoiOzs7QUFBQSwyQkFBMkI7QUNFM0I7RUFDQztFQUNBO0VBQ0E7RUFDQTtFQUNBO0FEQUQ7QUFDQSwwQkFBMEI7QUNJMUI7RUFDQztFQUNBO0VBQ0E7RUFDQTtFQUNBO0FERkQ7QUFDQSx3QkFBd0I7QUNNeEI7RUFDQztFQUNBO0VBQ0E7RUFDQTtFQUNBO0FESkQ7QUNPQTtFQUNDO0VBQ0E7RUFDQTtFQUNBO0FETEQ7QUFDQTs7Ozs7Ozs7Ozs7OztHQWFHO0FBQ0gsMEJBQTBCO0FBQzFCLG1CQUFtQjtBQUNuQixzQkFBc0I7QUFDdEIsb0JBQW9CO0FBQ3BCLG9CQUFvQjtBQUNwQixtQ0FBbUM7QUFDbkMsa0JBQWtCO0FBQ2xCLG9DQUFvQztBQUNwQyx3QkFBd0I7QUFDeEIseUJBQXlCO0FBbkR6Qjs7RUFFSTtFQUNBO0VBQ0E7RUFDQTtFQUNIO0VBQ0E7RUFDQTtBQXFERDtBQWxEQTtFQUNJO0FBb0RKIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vc2wtb25wcmVtaXNlLWNvZGV2aWV3ZXItY2hyb21lZXh0ZW5zaW9uLy4vZXh0ZW5zaW9uL3N0eWxlcy9wb3B1cC5sZXNzIiwid2VicGFjazovL3NsLW9ucHJlbWlzZS1jb2Rldmlld2VyLWNocm9tZWV4dGVuc2lvbi8uL2V4dGVuc2lvbi9zdHlsZXMvY29tbW9uL2ZvbnRzLmxlc3MiXSwic291cmNlc0NvbnRlbnQiOlsiQGltcG9ydCAnY29tbW9uL3ZhcmlhYmxlcy5sZXNzJztcblxuYm9keSxcbmh0bWwge1xuICAgIG1hcmdpbjogMDtcbiAgICBwYWRkaW5nOiAwO1xuICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgIGZvbnQtZmFtaWx5OiBAZm9udC1mYW1pbHktcHJpbWFyeTtcblx0bWluLXdpZHRoOiAzNTBweDtcblx0YmFja2dyb3VuZDogQGNvbG9yLXBvcHVwLWJnO1xuXHRib3gtc2hhZG93OiAwcHggMHB4IDIwcHggcmdiYShAY29sb3ItYmxhY2ssIDAuMik7XG59XG5cbioge1xuICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG59XG4iLCIvKioqKiogUm9ib3RvIFJlZ3VsYXIgKioqKiovXG5cbkBmb250LWZhY2Uge1xuXHRmb250LWZhbWlseTogJ1JvYm90byc7XG5cdGZvbnQtc3R5bGU6IG5vcm1hbDtcblx0Zm9udC13ZWlnaHQ6IDQwMDtcblx0c3JjOiBsb2NhbCgnUm9ib3RvJyksIGxvY2FsKCdSb2JvdG8tUmVndWxhcicpLCB1cmwoJ2Nocm9tZS1leHRlbnNpb246Ly9fX01TR19AQGV4dGVuc2lvbl9pZF9fL2ZvbnRzL1JvYm90by9Sb2JvdG8tUmVndWxhci53b2ZmMicpIGZvcm1hdCgnd29mZjInKTtcblx0dW5pY29kZS1yYW5nZTogVSswMDAwLTAwRkYsIFUrMDEzMSwgVSswMTUyLTAxNTMsIFUrMDJCQi0wMkJDLCBVKzAyQzYsIFUrMDJEQSwgVSswMkRDLCBVKzIwMDAtMjA2RiwgVSsyMDc0LCBVKzIwQUMsIFUrMjEyMiwgVSsyMTkxLCBVKzIxOTMsIFUrMjIxMiwgVSsyMjE1LCBVK0ZFRkYsIFUrRkZGRDtcbn1cblxuLyoqKioqIFJvYm90byBNZWRpdW0gKioqKiovXG5cbkBmb250LWZhY2Uge1xuXHRmb250LWZhbWlseTogJ1JvYm90byc7XG5cdGZvbnQtc3R5bGU6IG5vcm1hbDtcblx0Zm9udC13ZWlnaHQ6IDUwMDtcblx0c3JjOiBsb2NhbCgnUm9ib3RvIE1lZGl1bScpLCBsb2NhbCgnUm9ib3RvLU1lZGl1bScpLCB1cmwoJ2Nocm9tZS1leHRlbnNpb246Ly9fX01TR19AQGV4dGVuc2lvbl9pZF9fL2ZvbnRzL1JvYm90by9Sb2JvdG8tTWVkaXVtLndvZmYyJykgZm9ybWF0KCd3b2ZmMicpO1xuXHR1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xufVxuXG4vKioqKiogUm9ib3RvIEJvbGQgKioqKiovXG5cbkBmb250LWZhY2Uge1xuXHRmb250LWZhbWlseTogJ1JvYm90byc7XG5cdGZvbnQtc3R5bGU6IG5vcm1hbDtcblx0Zm9udC13ZWlnaHQ6IDcwMDtcblx0c3JjOiBsb2NhbCgnUm9ib3RvIEJvbGQnKSwgbG9jYWwoJ1JvYm90by1Cb2xkJyksIHVybCgnY2hyb21lLWV4dGVuc2lvbjovL19fTVNHX0BAZXh0ZW5zaW9uX2lkX18vZm9udHMvUm9ib3RvL1JvYm90by1Cb2xkLndvZmYyJykgZm9ybWF0KCd3b2ZmMicpO1xuXHR1bmljb2RlLXJhbmdlOiBVKzAwMDAtMDBGRiwgVSswMTMxLCBVKzAxNTItMDE1MywgVSswMkJCLTAyQkMsIFUrMDJDNiwgVSswMkRBLCBVKzAyREMsIFUrMjAwMC0yMDZGLCBVKzIwNzQsIFUrMjBBQywgVSsyMTIyLCBVKzIxOTEsIFUrMjE5MywgVSsyMjEyLCBVKzIyMTUsIFUrRkVGRiwgVStGRkZEO1xufVxuXG5AZm9udC1mYWNlIHtcblx0Zm9udC1mYW1pbHk6ICdNYXRlcmlhbCBJY29ucyc7XG5cdGZvbnQtc3R5bGU6IG5vcm1hbDtcblx0Zm9udC13ZWlnaHQ6IDQwMDtcblx0c3JjOiBsb2NhbCgnUm9ib3RvIEJvbGQnKSwgbG9jYWwoJ1JvYm90by1Cb2xkJyksIHVybCgnY2hyb21lLWV4dGVuc2lvbjovL19fTVNHX0BAZXh0ZW5zaW9uX2lkX18vZm9udHMvbWF0ZXJpYWwvZmxVaFJxNnR6WmNsUUVKLVZkZy1JdWlhRHNOYy53b2ZmMicpIGZvcm1hdCgnd29mZjInKTtcbn1cbiJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==*/
