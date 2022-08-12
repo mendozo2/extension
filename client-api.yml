@@ -1,0 +1,841 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: integration-client-api
+servers:
+  - url: https://api.integration.anxrs.com
+security:
+  - custom-authorizer: []
+paths:
+  /cits/{cusip}/income:
+    get:
+      summary: Calculate GI, TI as of the current date and provide those values along with the current CIT HWM
+      operationId: citIncome
+      tags:
+        - latest
+      parameters:
+        - in: query
+          name: number_of_cit_units
+          schema:
+            type: number
+          description: Number of units owned
+          required: true
+        - $ref: '#/components/parameters/cusip'
+      responses:
+        "200":
+          description: The calculated income
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+  /v1/cits/{cusip}/income:
+    get:
+      summary: Calculate GI, TI as of the current date and provide those values along with the current CIT HWM
+      parameters:
+        - in: query
+          name: number_of_cit_units
+          schema:
+            type: number
+          description: Number of units owned
+          required: true
+        - $ref: '#/components/parameters/cusip'
+      responses:
+        "200":
+          description: The calculated income
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+      operationId: v1Income
+      tags:
+        - stable
+  /cits/{cusip}/futureIncome:
+    get:
+      operationId: citFutureIncome
+      summary: Calculate future income for given CIT CUSIP
+      tags:
+        - latest
+      parameters:
+        - $ref: '#/components/parameters/cusip'
+        - in: query
+          name: number_of_cit_units
+          schema:
+            type: number
+          description: Number of units owned
+          required: true
+        - in: query
+          name: annnual_salary_amount
+          schema:
+            type: number
+          description: Annual salary amount in dollars
+          required: true
+        - in: query
+          name: ongoing_contribution_percent
+          schema:
+            type: number
+          description: Monthly on-going contribution amount, as a percentage of annual_salary_amount
+          required: true
+      responses:
+        "200":
+          description: The projected future income
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureIncome'
+        "404":
+          $ref: '#/components/responses/NotFound'
+  /v1/cits/{cusip}/futureIncome:
+    get:
+      summary: Calculate future income for given CIT CUSIP
+      parameters:
+        - $ref: '#/components/parameters/cusip'
+        - in: query
+          name: number_of_cit_units
+          schema:
+            type: number
+          description: Number of units owned
+          required: true
+        - in: query
+          name: annnual_salary_amount
+          schema:
+            type: number
+          description: Annual salary amount in dollars
+          required: true
+        - in: query
+          name: ongoing_contribution_percent
+          schema:
+            type: number
+          description: Monthly on-going contribution amount, as a percentage of annual_salary_amount
+          required: true
+      responses:
+        "200":
+          description: The projected future income
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureIncome'
+        "404":
+          $ref: '#/components/responses/NotFound'
+      operationId: v1CitFutureIncome
+      tags:
+        - stable
+  /cits/{cusip}/contributionAllowed:
+    get:
+      operationId: citContributionAllowed
+      summary: Calculate contributions allowed for given CIT CUSIP
+      tags:
+        - latest
+      parameters:
+        - $ref: '#/components/parameters/cusip'
+        - in: query
+          name: contributions
+          schema:
+            type: number
+          description: Dollar value of new contributions or on-going contributions
+          required: true
+        - in: query
+          name: lifetime_contributions
+          schema:
+            type: number
+          description: Dollar value of lifetime contributions
+          required: true
+        - in: query
+          name: ytd_contributions
+          schema:
+            type: number
+          description: Dollar value of year-to-date contributions
+          required: true
+      responses:
+        "200":
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contribution'
+  /v1/cits/{cusip}/contributionAllowed:
+    get:
+      summary: Calculate contributions allowed for given CIT CUSIP
+      parameters:
+        - $ref: '#/components/parameters/cusip'
+        - in: query
+          name: contributions
+          schema:
+            type: number
+          description: Dollar value of new contributions or on-going contributions
+          required: true
+        - in: query
+          name: lifetime_contributions
+          schema:
+            type: number
+          description: Dollar value of lifetime contributions
+          required: true
+        - in: query
+          name: ytd_contributions
+          schema:
+            type: number
+          description: Dollar value of year-to-date contributions
+          required: true
+      responses:
+        "200":
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contribution'
+      operationId: v1ContributionAllowed
+      tags:
+        - stable
+  /cits/eligible:
+    get:
+      summary: Use the dob and state to determine which CIT is appropriate.
+      operationId: eligible
+      tags:
+        - latest
+      parameters:
+        - in: query
+          name: dob
+          schema:
+            type: string
+          description: Participant's date of birth in the format YYYY-MM-DD
+          required: true
+        - in: query
+          name: state
+          schema:
+            type: string
+          description: Domiciled state for the plan as a two-letter abbreviation (e.g. AZ, MI)
+          required: true
+      responses:
+        "200":
+          description: The CIT the participant is eligible for
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CIT'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+  /v1/cits/eligible:
+    get:
+      summary: Use the dob and state to determine which CIT is appropriate.
+      parameters:
+        - in: query
+          name: dob
+          schema:
+            type: string
+          description: Participant's date of birth in the format YYYY-MM-DD
+          required: true
+        - in: query
+          name: state
+          schema:
+            type: string
+          description: Domiciled state for the plan as a two-letter abbreviation (e.g. AZ, MI)
+          required: true
+      responses:
+        "200":
+          description: The CIT the participant is eligible for
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CIT'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+      operationId: v1Eligible
+      tags:
+        - stable
+  /futureIncome:
+    get:
+      summary: Return future income projections with LIB.
+      operationId: futureIncome
+      tags:
+        - latest
+      parameters:
+        - in: query
+          name: dob
+          schema:
+            type: string
+          description: Participant's date of birth in the format YYYY-MM-DD
+          required: true
+        - in: query
+          name: pour_in
+          schema:
+            type: number
+          description: Participant's initial contribution
+          required: true
+        - in: query
+          name: ann_inc
+          schema:
+            type: number
+          description: Participant's annual income
+          required: true
+        - in: query
+          name: ann_cont
+          schema:
+            type: number
+          description: Participant's annual contribution
+          required: true
+      responses:
+        "200":
+          description: The timeseries plot data for future income
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureIncomePoints'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+  /v1/futureIncome:
+    get:
+      summary: Return future income projections with LIB.
+      parameters:
+        - in: query
+          name: dob
+          schema:
+            type: string
+          description: Participant's date of birth in the format YYYY-MM-DD
+          required: true
+        - in: query
+          name: pour_in
+          schema:
+            type: number
+          description: Participant's initial contribution
+          required: true
+        - in: query
+          name: ann_inc
+          schema:
+            type: number
+          description: Participant's annual income
+          required: true
+        - in: query
+          name: ann_cont
+          schema:
+            type: number
+          description: Participant's annual contribution
+          required: true
+      responses:
+        "200":
+          description: The timeseries plot data for future income
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureIncomePoints'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+      operationId: v1FutureIncome
+      tags:
+        - stable
+  /futureIncomeNoLib:
+    get:
+      summary: Return future income projections without LIB.
+      operationId: futureIncomeNoLib
+      tags:
+        - latest
+      parameters:
+        - in: query
+          name: dob
+          schema:
+            type: string
+          description: Participant's date of birth in the format YYYY-MM-DD
+          required: true
+        - in: query
+          name: pour_in
+          schema:
+            type: number
+          description: Participant's initial contribution
+          required: true
+        - in: query
+          name: ann_inc
+          schema:
+            type: number
+          description: Participant's annual income
+          required: true
+        - in: query
+          name: ann_cont
+          schema:
+            type: number
+          description: Participant's annual contribution
+          required: true
+      responses:
+        "200":
+          description: The timeseries plot data for future income
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureIncomePoints'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+  /v1/futureIncomeNoLib:
+    get:
+      summary: Return future income projections without LIB.
+      parameters:
+        - in: query
+          name: dob
+          schema:
+            type: string
+          description: Participant's date of birth in the format YYYY-MM-DD
+          required: true
+        - in: query
+          name: pour_in
+          schema:
+            type: number
+          description: Participant's initial contribution
+          required: true
+        - in: query
+          name: ann_inc
+          schema:
+            type: number
+          description: Participant's annual income
+          required: true
+        - in: query
+          name: ann_cont
+          schema:
+            type: number
+          description: Participant's annual contribution
+          required: true
+      responses:
+        "200":
+          description: The timeseries plot data for future income
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureIncomePoints'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "404":
+          $ref: '#/components/responses/NotFound'
+      operationId: v1FutureIncomeNoLib
+      tags:
+        - stable
+  /eligible-tdfs:
+    get:
+      operationId: getEligibleTdfs
+      summary: Get eligible TDFs
+      tags:
+        - latest
+      parameters:
+        - in: query
+          name: plan_id
+          schema:
+            type: string
+          description: ID of the plan
+          required: true
+        - in: query
+          name: plan_state
+          schema:
+            type: string
+          description: Domiciled state for the plan as a two-letter abbreviation
+          example: AZ
+          required: true
+        - in: query
+          name: participant_birthdate
+          schema:
+            type: string
+          description: Participant's date of birth in the format YYYY-MM-DD
+          example: "1990-05-23"
+          required: true
+        - in: query
+          name: participant_id
+          schema:
+            type: string
+          description: ID of the participant
+      responses:
+        "200":
+          description: Eligible TDFs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TDFs'
+components:
+  securitySchemes:
+    custom-authorizer:
+      type: apiKey
+      name: Authorization
+      in: header
+  parameters:
+    cusip:
+      name: cusip
+      description: Financial security CUSIP
+      in: path
+      schema:
+        type: string
+      required: true
+    participant_id:
+      name: id
+      description: Participant ID
+      in: path
+      schema:
+        type: string
+      required: true
+    plan_id:
+      name: id
+      description: Plan ID
+      in: path
+      schema:
+        type: string
+      required: true
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid or missing parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Contribution:
+      type: object
+      properties:
+        within_limits:
+          type: boolean
+          example: true
+        code:
+          type: integer
+          example: 0
+        message:
+          type: string
+          example: Contributions are within allowable limits
+        excess_contributions:
+          type: number
+          example: 0.00
+    Income:
+      type: object
+      properties:
+        guaranteed_income:
+          type: number
+          description: TotalUnits * HWM * ( 1 + guaranteed_payout_rate )
+          example: 45327.23
+        high_water_mark:
+          type: number
+          description: The high water mark for the CIT
+        target_income:
+          type: number
+          description: TotalUnits * HWM * ( 1 + target_payout_rate )
+          example: 10.00000000
+        cit_hwm_date:
+          type: string
+          format: date
+          description: Date the HWM was updated
+          example: "2021-07-09"
+        cit_nav_date:
+          type: string
+          format: date
+          description: Date the CIT NAV was updated
+          example: "2021-07-09"
+    FutureIncome:
+      type: object
+      properties:
+        cit_hwm_date:
+          type: string
+          format: date
+          description: Date the HWM was updated
+          example: "2021-07-09"
+        cit_nav_date:
+          type: string
+          format: date
+          description: Date the CIT NAV was updated
+          example: "2021-07-09"
+        guaranteed_income:
+          type: number
+          description: TotalUnits * HWM * ( 1 + guaranteed_payout_rate )
+          example: 45327.23
+        guaranteed_income_at_3_percent:
+          type: number
+          description: TotalUnits * HWM * ( 1 + guaranteed_payout_rate ) * 1.03%
+          example: 45327.23
+        guaranteed_income_at_5_percent:
+          type: number
+          description: TotalUnits * HWM * ( 1 + guaranteed_payout_rate ) * 1.05%
+          example: 45327.23
+        high_water_mark:
+          type: number
+          description: The high water mark for the CIT
+        target_income:
+          type: number
+          description: TotalUnits * HWM * ( 1 + target_payout_rate )
+          example: 45977.86
+        target_income_at_3_percent:
+          type: number
+          description: TotalUnits * HWM * ( 1 + target_payout_rate ) * 1.03%
+          example: 45977.86
+        target_income_at_5_percent:
+          type: number
+          description: TotalUnits * HWM * ( 1 + target_payout_rate ) * 1.05%
+          example: 45977.86
+    TDFs:
+      type: array
+      items:
+        $ref: '#/components/schemas/TDF'
+    TDF:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        birth_date_high:
+          type: string
+          format: date
+          description: Highest DOB possible for a participant
+          example: "1963-12-31"
+        birth_date_low:
+          type: string
+          format: date
+          description: Lowest DOB possible for a participant
+          example: "1961-01-01"
+        cusip:
+          type: string
+          description: Primary Identifier (CUSIP ID) for the CIT
+          example: CIT12345A
+        contribution_end_date:
+          type: string
+          format: date
+          description: Date at which ALL contributions end. No contributions allowed after this date. Equivalent to Entry_Period_End + 1 day.
+          example: "2024-01-01"
+        contribution_limit_amount:
+          type: number
+          description: Lifetime maximum contributions allowed
+          example: 2000000.52
+        entry_period_start_date:
+          type: string
+          format: date
+          description: Date at which participant entry into CIT begins
+          example: "2021-07-09"
+        entry_period_end_date:
+          type: string
+          format: date
+          description: Date at which participant entry into CIT ends
+          example: "2023-12-31"
+        guaranteed_payout_rate:
+          type: number
+          format: float
+          description: Guaranteed CIT payout factor
+          example: 0.045
+        high_water_mark_calc_period:
+          type: string
+          enum:
+            - None
+            - Monthly
+            - Quarterly
+            - Annual
+          description: None, Monthly, Quarterly, Annual
+          example: Quarterly
+        income_activation_date:
+          type: string
+          format: date
+          description: Date of target income payout for this CIT
+          example: "2029-12-14"
+        secondary_contribution_limit_amount:
+          type: number
+          format: float
+          description: Secondary contribution limit amount
+          example: 100000.00
+        secondary_contribution_limit_date:
+          type: string
+          format: date
+          description: Start date for the secondary contribution limit
+          example: "2024-01-01"
+        start_date:
+          type: string
+          format: date
+          description: Date at which the CIT begins to allocate assets to LIB
+          example: "2021-07-09"
+        states_excluded:
+          type: string
+          description: Delimited string of states in which the LIB cannot be sold
+          example: AZ,NE
+        target_payout_rate:
+          type: number
+          format: float
+          description: Target CIT payout factor
+          example: 0.060
+    CIT:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        birth_date_high:
+          type: string
+          format: date
+          description: Highest DOB possible for a participant
+          example: "1963-12-31"
+        birth_date_low:
+          type: string
+          format: date
+          description: Lowest DOB possible for a participant
+          example: "1961-01-01"
+        cit_cusip:
+          type: string
+          description: Primary Identifier (CUSIP ID) for the CIT
+          example: CIT12345A
+        cit_hwm:
+          type: number
+          description: High Water Mark value delivered by the High Water Mark (HWM) Flow
+          example: 0.050
+        cit_hwm_date:
+          type: string
+          format: date
+          description: Date the HWM was updated
+          example: "2021-07-09"
+        cit_nav:
+          type: number
+          description: Value delivered daily by the CIT NAV Data Flow
+          example: 0.050
+        cit_nav_date:
+          type: string
+          format: date
+          description: Date the CIT NAV was updated
+          example: "2021-07-09"
+        contribution_end_date:
+          type: string
+          format: date
+          description: Date at which ALL contributions end. No contributions allowed after this date. Equivalent to Entry_Period_End + 1 day.
+          example: "2024-01-01"
+        contribution_limit_amount:
+          type: number
+          description: Lifetime maximum contributions allowed
+          example: 2000000.52
+        entry_period_start_date:
+          type: string
+          format: date
+          description: Date at which participant entry into CIT begins
+          example: "2021-07-09"
+        entry_period_end_date:
+          type: string
+          format: date
+          description: Date at which participant entry into CIT ends
+          example: "2023-12-31"
+        guaranteed_payout_rate:
+          type: number
+          format: float
+          description: Guaranteed CIT payout factor
+          example: 0.045
+        high_water_mark_calc_period:
+          type: string
+          enum:
+            - None
+            - Monthly
+            - Quarterly
+            - Annual
+          description: None, Monthly, Quarterly, Annual
+          example: Quarterly
+        income_activation_date:
+          type: string
+          format: date
+          description: Date of target income payout for this CIT
+          example: "2029-12-14"
+        insurance_carrier:
+          type: string
+          description: The Carrier to which this LIB CIT Pair is associated
+          example: ACME Insurance
+        lib_cusip:
+          type: string
+          description: LIB (CUSIP ID) for the CIT LIB Component
+          example: LIB12345A
+        secondary_contribution_limit_amount:
+          type: number
+          format: float
+          description: Secondary contribution limit amount
+          example: 100000.00
+        secondary_contribution_limit_date:
+          type: string
+          format: date
+          description: Start date for the secondary contribution limit
+          example: "2024-01-01"
+        start_date:
+          type: string
+          format: date
+          description: Date at which the CIT begins to allocate assets to LIB
+          example: "2021-07-09"
+        states_excluded:
+          type: string
+          description: Delimited string of states in which the LIB cannot be sold
+          example: AZ,NE
+        target_payout_rate:
+          type: number
+          format: float
+          description: Target CIT payout factor
+          example: 0.060
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    FutureIncomePoint:
+      type: object
+      required:
+        - Income
+        - Income_Monthly
+        - Premium
+        - Age
+        - CITValue
+        - HWM
+        - Year
+        - Month
+      properties:
+        Income:
+          type: number
+          description: Projected income
+          example: 706.218997
+        Income_Monthly:
+          type: number
+          description: Monthly projected income
+          example: 235.4063323
+        Premium:
+          type: number
+          example: 0.0
+        Age:
+          type: number
+          description: Age of participant
+          example: 94.5
+        CITValue:
+          type: number
+          description: Projected value of CIT
+          example: 13113.8937753
+        HWM:
+          type: number
+          description: High-water mark
+          example: 47081.2664642
+        Year:
+          description: Year in CIT
+          type: number
+          example: 37.0
+        Month:
+          description: Month in CIT
+          type: number
+          example: 444
+    FutureIncomePoints:
+      type: array
+      items:
+        $ref: '#/components/schemas/FutureIncomePoint'

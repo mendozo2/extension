@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "ca82f80f-5453-424f-8b9a-00868f997436",
+		"name": "ARDX",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"postman.setEnvironmentVariable('access_token', responseJson.access_token)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://auth.api.{{host}}/oauth2/token?grant_type=client_credentials&client_id={{client_id}}&client_secret={{client_secret}}",
+					"protocol": "https",
+					"host": [
+						"auth",
+						"api",
+						"{{host}}"
+					],
+					"path": [
+						"oauth2",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials"
+						},
+						{
+							"key": "scope",
+							"value": "https://1nx9wrdyo9.execute-api.us-east-2.amazonaws.com/cit.read",
+							"disabled": true
+						},
+						{
+							"key": "client_id",
+							"value": "{{client_id}}"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/cits",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"    <table bgcolor=\"#FFFFFF\">",
+							"        <tr>",
+							"            <th>CIT CUSIP</th>",
+							"            <th>Birthdate Low</th>",
+							"            <th>Birthdate High</th>",
+							"        </tr>",
+							"        ",
+							"            <tr>",
+							"                <td>{{response.cit_cusip}}</td>",
+							"                <td>{{response.birth_date_low}}</td>",
+							"                <td>{{response.birth_date_high}}</td>",
+							"            </tr>",
+							"",
+							"    </table>",
+							"`;",
+							"",
+							"pm.visualizer.set(template, {",
+							"    response: JSON.parse(responseBody)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.{{host}}/cits?dob=1962-01-01&state=MO",
+					"protocol": "https",
+					"host": [
+						"api",
+						"{{host}}"
+					],
+					"path": [
+						"cits"
+					],
+					"query": [
+						{
+							"key": "dob",
+							"value": "1962-01-01",
+							"description": "Participant's date of birth in the format YYYY-MM-DD"
+						},
+						{
+							"key": "state",
+							"value": "MO",
+							"description": "Participant's resident state as a two-letter abbreviation (e.g. AZ, MI)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/cits/eligible",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.{{host}}/cits/eligible?dob=1962-12-31&state=MO",
+					"protocol": "https",
+					"host": [
+						"api",
+						"{{host}}"
+					],
+					"path": [
+						"cits",
+						"eligible"
+					],
+					"query": [
+						{
+							"key": "dob",
+							"value": "1962-12-31"
+						},
+						{
+							"key": "state",
+							"value": "MO"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/futureIncome",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.{{host}}/futureIncome?dob=1965-01-01&pour_in=1000&ann_inc=10000&ann_cont=0.06",
+					"protocol": "https",
+					"host": [
+						"api",
+						"{{host}}"
+					],
+					"path": [
+						"futureIncome"
+					],
+					"query": [
+						{
+							"key": "dob",
+							"value": "1965-01-01"
+						},
+						{
+							"key": "pour_in",
+							"value": "1000"
+						},
+						{
+							"key": "ann_inc",
+							"value": "10000"
+						},
+						{
+							"key": "ann_cont",
+							"value": "0.06"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "/futureIncome",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.{{host}}/futureIncome?dob=1965-01-01&pour_in=1000&ann_inc=10000&ann_cont=0.06",
+							"protocol": "https",
+							"host": [
+								"api",
+								"{{host}}"
+							],
+							"path": [
+								"futureIncome"
+							],
+							"query": [
+								{
+									"key": "dob",
+									"value": "1965-01-01"
+								},
+								{
+									"key": "pour_in",
+									"value": "1000"
+								},
+								{
+									"key": "ann_inc",
+									"value": "10000"
+								},
+								{
+									"key": "ann_cont",
+									"value": "0.06"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "19038"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Server",
+							"value": "CloudFront"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 30 Jun 2022 18:58:34 GMT"
+						},
+						{
+							"key": "Apigw-Requestid",
+							"value": "UjLNpi64CYcEP9A="
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=31536000; includeSubDomains"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "X-Cache",
+							"value": "Miss from cloudfront"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 cf067f00f2e5b21f25d2ffca9aa60006.cloudfront.net (CloudFront)"
+						},
+						{
+							"key": "X-Amz-Cf-Pop",
+							"value": "LAX50-C3"
+						},
+						{
+							"key": "X-Amz-Cf-Id",
+							"value": "p4r6bmXiD_en0cnyyJz-jZi7P7gWGgCSMTf0lWaXkavVghHrrQQBwQ=="
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 57,\n        \"CITValue\": 0,\n        \"Year\": 0\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 57.25,\n        \"CITValue\": 1173.767911,\n        \"Year\": 0.25\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 57.5,\n        \"CITValue\": 1271.7825001,\n        \"Year\": 0.5\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 57.75,\n        \"CITValue\": 1478.1638343,\n        \"Year\": 0.75\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 58,\n        \"CITValue\": 1712.0777276,\n        \"Year\": 1\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 58.25,\n        \"CITValue\": 1937.6104143,\n        \"Year\": 1.25\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 58.5,\n        \"CITValue\": 2205.2155532,\n        \"Year\": 1.5\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 58.75,\n        \"CITValue\": 2320.8834453,\n        \"Year\": 1.75\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 59,\n        \"CITValue\": 2542.7519094,\n        \"Year\": 2\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 59.25,\n        \"CITValue\": 2775.024457,\n        \"Year\": 2.25\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 59.5,\n        \"CITValue\": 2787.7665495,\n        \"Year\": 2.5\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 59.75,\n        \"CITValue\": 2810.9844866,\n        \"Year\": 2.75\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 60,\n        \"CITValue\": 3007.3296219,\n        \"Year\": 3\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 60.25,\n        \"CITValue\": 3307.7352561,\n        \"Year\": 3.25\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 60.5,\n        \"CITValue\": 3626.3735236,\n        \"Year\": 3.5\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 60.75,\n        \"CITValue\": 3919.3866372,\n        \"Year\": 3.75\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 61,\n        \"CITValue\": 3930.3490521,\n        \"Year\": 4\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 61.25,\n        \"CITValue\": 4241.5718868,\n        \"Year\": 4.25\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 61.5,\n        \"CITValue\": 4602.3419416,\n        \"Year\": 4.5\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 61.75,\n        \"CITValue\": 4924.2660627,\n        \"Year\": 4.75\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 62,\n        \"CITValue\": 5321.1213454,\n        \"Year\": 5\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 62.25,\n        \"CITValue\": 5331.0512289,\n        \"Year\": 5.25\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 62.5,\n        \"CITValue\": 5405.9143632,\n        \"Year\": 5.5\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 62.75,\n        \"CITValue\": 5686.8118024,\n        \"Year\": 5.75\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 63,\n        \"CITValue\": 5414.4209824,\n        \"Year\": 6\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 63.25,\n        \"CITValue\": 6103.3901875,\n        \"Year\": 6.25\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 63.5,\n        \"CITValue\": 6615.2779016,\n        \"Year\": 6.5\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 63.75,\n        \"CITValue\": 6949.1659602,\n        \"Year\": 6.75\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 64,\n        \"CITValue\": 7442.6180094,\n        \"Year\": 7\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 64.25,\n        \"CITValue\": 6878.2699814,\n        \"Year\": 7.25\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 64.5,\n        \"CITValue\": 7983.2958245,\n        \"Year\": 7.5\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 64.75,\n        \"CITValue\": 8459.2514006,\n        \"Year\": 7.75\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 65,\n        \"CITValue\": 9276.222588,\n        \"Year\": 8\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 65.25,\n        \"CITValue\": 8035.5755766,\n        \"Year\": 8.25\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 65.5,\n        \"CITValue\": 9229.93367,\n        \"Year\": 8.5\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 65.75,\n        \"CITValue\": 9722.2075233,\n        \"Year\": 8.75\n    },\n    {\n        \"Income\": 0,\n        \"Income_Monthly\": 0,\n        \"Age\": 66,\n        \"CITValue\": 10580.8549644,\n        \"Year\": 9\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 66.25,\n        \"CITValue\": 10377.7175925,\n        \"Year\": 9.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 66.5,\n        \"CITValue\": 10406.4821866,\n        \"Year\": 9.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 66.75,\n        \"CITValue\": 9752.1702864,\n        \"Year\": 9.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 67,\n        \"CITValue\": 9963.3214252,\n        \"Year\": 10\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 67.25,\n        \"CITValue\": 10013.6647764,\n        \"Year\": 10.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 67.5,\n        \"CITValue\": 9582.8697301,\n        \"Year\": 10.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 67.75,\n        \"CITValue\": 9926.674087,\n        \"Year\": 10.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 68,\n        \"CITValue\": 8621.227587,\n        \"Year\": 11\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 68.25,\n        \"CITValue\": 8834.3071122,\n        \"Year\": 11.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 68.5,\n        \"CITValue\": 8324.3659495,\n        \"Year\": 11.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 68.75,\n        \"CITValue\": 8119.3974929,\n        \"Year\": 11.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 69,\n        \"CITValue\": 8191.3725474,\n        \"Year\": 12\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 69.25,\n        \"CITValue\": 8145.2138543,\n        \"Year\": 12.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 69.5,\n        \"CITValue\": 8049.6805197,\n        \"Year\": 12.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 69.75,\n        \"CITValue\": 7906.125396,\n        \"Year\": 12.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 70,\n        \"CITValue\": 8371.9936862,\n        \"Year\": 13\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 70.25,\n        \"CITValue\": 7639.79954,\n        \"Year\": 13.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 70.5,\n        \"CITValue\": 6586.1523897,\n        \"Year\": 13.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 70.75,\n        \"CITValue\": 7057.6406133,\n        \"Year\": 13.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 71,\n        \"CITValue\": 6598.4575839,\n        \"Year\": 14\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 71.25,\n        \"CITValue\": 6439.2677643,\n        \"Year\": 14.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 71.5,\n        \"CITValue\": 6866.9659254,\n        \"Year\": 14.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 71.75,\n        \"CITValue\": 6209.2111971,\n        \"Year\": 14.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 72,\n        \"CITValue\": 5511.394216,\n        \"Year\": 15\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 72.25,\n        \"CITValue\": 6002.3650398,\n        \"Year\": 15.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 72.5,\n        \"CITValue\": 5666.4362193,\n        \"Year\": 15.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 72.75,\n        \"CITValue\": 5259.0986785,\n        \"Year\": 15.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 73,\n        \"CITValue\": 5169.3657096,\n        \"Year\": 16\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 73.25,\n        \"CITValue\": 5063.5450876,\n        \"Year\": 16.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 73.5,\n        \"CITValue\": 5064.2408312,\n        \"Year\": 16.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 73.75,\n        \"CITValue\": 4806.5007522,\n        \"Year\": 16.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 74,\n        \"CITValue\": 4763.2335603,\n        \"Year\": 17\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 74.25,\n        \"CITValue\": 4978.3305275,\n        \"Year\": 17.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 74.5,\n        \"CITValue\": 4229.3001851,\n        \"Year\": 17.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 74.75,\n        \"CITValue\": 4077.4869956,\n        \"Year\": 17.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 75,\n        \"CITValue\": 4035.8809481,\n        \"Year\": 18\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 75.25,\n        \"CITValue\": 4120.5378103,\n        \"Year\": 18.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 75.5,\n        \"CITValue\": 3620.8775842,\n        \"Year\": 18.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 75.75,\n        \"CITValue\": 3856.3917816,\n        \"Year\": 18.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 76,\n        \"CITValue\": 3213.6660778,\n        \"Year\": 19\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 76.25,\n        \"CITValue\": 3096.4179492,\n        \"Year\": 19.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 76.5,\n        \"CITValue\": 3103.7816974,\n        \"Year\": 19.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 76.75,\n        \"CITValue\": 2830.7679757,\n        \"Year\": 19.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 77,\n        \"CITValue\": 2714.5599262,\n        \"Year\": 20\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 77.25,\n        \"CITValue\": 2695.8799509,\n        \"Year\": 20.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 77.5,\n        \"CITValue\": 2575.5858834,\n        \"Year\": 20.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 77.75,\n        \"CITValue\": 2346.8323239,\n        \"Year\": 20.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 78,\n        \"CITValue\": 2149.2277065,\n        \"Year\": 21\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 78.25,\n        \"CITValue\": 2155.0192984,\n        \"Year\": 21.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 78.5,\n        \"CITValue\": 1904.0130335,\n        \"Year\": 21.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 78.75,\n        \"CITValue\": 1692.2727645,\n        \"Year\": 21.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 79,\n        \"CITValue\": 1655.9868265,\n        \"Year\": 22\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 79.25,\n        \"CITValue\": 1455.9761819,\n        \"Year\": 22.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 79.5,\n        \"CITValue\": 1500.3711136,\n        \"Year\": 22.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 79.75,\n        \"CITValue\": 1499.3371437,\n        \"Year\": 22.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 80,\n        \"CITValue\": 1413.9393281,\n        \"Year\": 23\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 80.25,\n        \"CITValue\": 1338.3524858,\n        \"Year\": 23.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 80.5,\n        \"CITValue\": 1364.5638718,\n        \"Year\": 23.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 80.75,\n        \"CITValue\": 1268.8491094,\n        \"Year\": 23.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 81,\n        \"CITValue\": 1229.3511654,\n        \"Year\": 24\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 81.25,\n        \"CITValue\": 1167.0586286,\n        \"Year\": 24.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 81.5,\n        \"CITValue\": 1270.5875712,\n        \"Year\": 24.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 81.75,\n        \"CITValue\": 1123.7857237,\n        \"Year\": 24.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 82,\n        \"CITValue\": 1182.7525618,\n        \"Year\": 25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 82.25,\n        \"CITValue\": 1101.3399913,\n        \"Year\": 25.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 82.5,\n        \"CITValue\": 1029.6753628,\n        \"Year\": 25.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 82.75,\n        \"CITValue\": 1039.2967629,\n        \"Year\": 25.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 83,\n        \"CITValue\": 981.2568665,\n        \"Year\": 26\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 83.25,\n        \"CITValue\": 936.4805351,\n        \"Year\": 26.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 83.5,\n        \"CITValue\": 831.148031,\n        \"Year\": 26.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 83.75,\n        \"CITValue\": 857.7185828,\n        \"Year\": 26.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 84,\n        \"CITValue\": 853.2457806,\n        \"Year\": 27\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 84.25,\n        \"CITValue\": 797.6880033,\n        \"Year\": 27.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 84.5,\n        \"CITValue\": 777.4684186,\n        \"Year\": 27.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 84.75,\n        \"CITValue\": 754.7588674,\n        \"Year\": 27.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 85,\n        \"CITValue\": 677.7951586,\n        \"Year\": 28\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 85.25,\n        \"CITValue\": 687.6021586,\n        \"Year\": 28.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 85.5,\n        \"CITValue\": 542.9375106,\n        \"Year\": 28.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 85.75,\n        \"CITValue\": 542.284142,\n        \"Year\": 28.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 86,\n        \"CITValue\": 445.8933047,\n        \"Year\": 29\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 86.25,\n        \"CITValue\": 490.9995662,\n        \"Year\": 29.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 86.5,\n        \"CITValue\": 434.9499621,\n        \"Year\": 29.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 86.75,\n        \"CITValue\": 427.3671669,\n        \"Year\": 29.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 87,\n        \"CITValue\": 348.6928643,\n        \"Year\": 30\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 87.25,\n        \"CITValue\": 284.1818783,\n        \"Year\": 30.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 87.5,\n        \"CITValue\": 294.8794516,\n        \"Year\": 30.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 87.75,\n        \"CITValue\": 222.062551,\n        \"Year\": 30.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 88,\n        \"CITValue\": 186.2076705,\n        \"Year\": 31\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 88.25,\n        \"CITValue\": 158.1121525,\n        \"Year\": 31.25\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 88.5,\n        \"CITValue\": 123.9054938,\n        \"Year\": 31.5\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 88.75,\n        \"CITValue\": 78.6240433,\n        \"Year\": 31.75\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 89,\n        \"CITValue\": 41.5189206,\n        \"Year\": 32\n    },\n    {\n        \"Income\": 158.7128245,\n        \"Income_Monthly\": 52.9042748,\n        \"Age\": 89.25,\n        \"CITValue\": 1.372503,\n        \"Year\": 32.25\n    },\n    {\n        \"Income\": 120.551251,\n        \"Income_Monthly\": 40.1837503,\n        \"Age\": 89.5,\n        \"CITValue\": 0,\n        \"Year\": 32.5\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 89.75,\n        \"CITValue\": 0,\n        \"Year\": 32.75\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 90,\n        \"CITValue\": 0,\n        \"Year\": 33\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 90.25,\n        \"CITValue\": 0,\n        \"Year\": 33.25\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 90.5,\n        \"CITValue\": 0,\n        \"Year\": 33.5\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 90.75,\n        \"CITValue\": 0,\n        \"Year\": 33.75\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 91,\n        \"CITValue\": 0,\n        \"Year\": 34\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 91.25,\n        \"CITValue\": 0,\n        \"Year\": 34.25\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 91.5,\n        \"CITValue\": 0,\n        \"Year\": 34.5\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 91.75,\n        \"CITValue\": 0,\n        \"Year\": 34.75\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 92,\n        \"CITValue\": 0,\n        \"Year\": 35\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 92.25,\n        \"CITValue\": 0,\n        \"Year\": 35.25\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 92.5,\n        \"CITValue\": 0,\n        \"Year\": 35.5\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 92.75,\n        \"CITValue\": 0,\n        \"Year\": 35.75\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 93,\n        \"CITValue\": 0,\n        \"Year\": 36\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 93.25,\n        \"CITValue\": 0,\n        \"Year\": 36.25\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 93.5,\n        \"CITValue\": 0,\n        \"Year\": 36.5\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 93.75,\n        \"CITValue\": 0,\n        \"Year\": 36.75\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 94,\n        \"CITValue\": 0,\n        \"Year\": 37\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 94.25,\n        \"CITValue\": 0,\n        \"Year\": 37.25\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 94.5,\n        \"CITValue\": 0,\n        \"Year\": 37.5\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 94.75,\n        \"CITValue\": 0,\n        \"Year\": 37.75\n    },\n    {\n        \"Income\": 119.0346184,\n        \"Income_Monthly\": 39.6782061,\n        \"Age\": 95,\n        \"CITValue\": 0,\n        \"Year\": 38\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "/futureIncomeNoLib",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.{{host}}/futureIncomeNoLib?dob=1965-01-01&pour_in=1000&ann_inc=10000&ann_cont=0.05",
+					"protocol": "https",
+					"host": [
+						"api",
+						"{{host}}"
+					],
+					"path": [
+						"futureIncomeNoLib"
+					],
+					"query": [
+						{
+							"key": "dob",
+							"value": "1965-01-01"
+						},
+						{
+							"key": "pour_in",
+							"value": "1000"
+						},
+						{
+							"key": "ann_inc",
+							"value": "10000"
+						},
+						{
+							"key": "ann_cont",
+							"value": "0.05"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
